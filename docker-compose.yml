@@ -1,0 +1,44 @@
+version: '3.3'
+
+services:
+  app:
+    image: ylnr/app:v1.0.1
+    container_name: app
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database_exceed:5432/exceed
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_FLYWAY_URL: jdbc:postgresql://database_exceed:5432/exceed
+      SPRING_FLYWAY_PASSWORD: root
+      SPRING_FLYWAY_USERNAME: root
+    depends_on:
+      - database_exceed
+    networks:
+      - postgres
+  database_exceed:
+    image: bitnami/postgresql
+    container_name: database_exceed
+    restart: always
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: exceed
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  database_exceed:

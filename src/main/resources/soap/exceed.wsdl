@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://iitu.kz/transaction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://iitu.kz/transaction" targetNamespace="http://iitu.kz/transaction">
+  <wsdl:types>
+    <xs:schema xmlns="http://iitu.kz/transaction" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://iitu.kz/transaction">
+      <xs:complexType name="Transaction">
+        <xs:sequence>
+          <xs:element name="account_from" type="xs:string"/>
+          <xs:element name="account_to" type="xs:string"/>
+          <xs:element name="currency_shortname" type="CurrencyType"/>
+          <xs:element name="sum" type="xs:double"/>
+          <xs:element name="expense_category" type="ExpenseCategory"/>
+          <xs:element name="datetime" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="ExpenseCategory">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SERVICE"/>
+          <xs:enumeration value="GOOD"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="CurrencyType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="USD"/>
+          <xs:enumeration value="KZT"/>
+          <xs:enumeration value="RUB"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="TransactionRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="exceed" type="Transaction"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="TransactionResponse">
+        <xs:sequence>
+          <xs:element name="account_from" type="xs:string"/>
+          <xs:element name="account_to" type="xs:string"/>
+          <xs:element name="currency_shortname" type="CurrencyType"/>
+          <xs:element name="sum" type="xs:double"/>
+          <xs:element name="expense_category" type="ExpenseCategory"/>
+          <xs:element name="datetime" type="xs:dateTime"/>
+          <xs:element name="limit_sum" type="xs:double"/>
+          <xs:element name="limit_datetime" type="xs:dateTime"/>
+          <xs:element name="limit_currency_shortname" type="CurrencyType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="TransactionRequest">
+    <wsdl:part element="tns:TransactionRequest" name="TransactionRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ExceedServicePort">
+    <wsdl:operation name="Transaction">
+      <wsdl:input message="tns:TransactionRequest" name="TransactionRequest">
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExceedServicePortSoap11" type="tns:ExceedServicePort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Transaction">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="TransactionRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExceedServicePortService">
+    <wsdl:port binding="tns:ExceedServicePortSoap11" name="ExceedServicePortSoap11">
+      <soap:address location="http://localhost:8080/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,17 @@
+<soapenv:Envelope
+  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:tran="http://iitu.kz/transaction">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tran:TransactionRequest>
+      <tran:exceed>
+        <tran:account_from>4400303345</tran:account_from>
+        <tran:account_to>4400459683</tran:account_to>
+        <tran:currency_shortname>KZT</tran:currency_shortname>
+        <tran:sum>1000.00</tran:sum>
+        <tran:expense_category>SERVICE</tran:expense_category>
+        <tran:datetime>2023-09-28T10:00:00</tran:datetime>
+      </tran:exceed>
+    </tran:TransactionRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/exceed}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  flyway:
+    user: ${SPRING_FLYWAY_USERNAME:postgres}
+    password: ${SPRING_FLYWAY_PASSWORD:root}
+    url: ${SPRING_FLYWAY_URL:jdbc:postgresql://localhost:5432/exceed}
+    schemas: public
+    locations: classpath:db/migration
+    enabled: on
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /api-docs

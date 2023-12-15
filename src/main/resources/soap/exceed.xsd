@@ -1,0 +1,58 @@
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://iitu.kz/transaction"
+  xmlns="http://iitu.kz/transaction"
+  elementFormDefault="qualified">
+
+  <xs:complexType name="Transaction">
+    <xs:sequence>
+      <xs:element name="account_from" type="xs:string"/>
+      <xs:element name="account_to" type="xs:string"/>
+      <xs:element name="currency_shortname" type="CurrencyType"/>
+      <xs:element name="sum" type="xs:double"/>
+      <xs:element name="expense_category" type="ExpenseCategory"/>
+      <xs:element name="datetime" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="ExpenseCategory">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVICE"/>
+      <xs:enumeration value="GOOD"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="CurrencyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="USD"/>
+      <xs:enumeration value="KZT"/>
+      <xs:enumeration value="RUB"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:element name="TransactionRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="exceed" type="Transaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="TransactionResponse">
+    <xs:sequence>
+      <xs:element name="account_from" type="xs:string"/>
+      <xs:element name="account_to" type="xs:string"/>
+      <xs:element name="currency_shortname" type="CurrencyType"/>
+      <xs:element name="sum" type="xs:double"/>
+      <xs:element name="expense_category" type="ExpenseCategory"/>
+      <xs:element name="datetime" type="xs:dateTime"/>
+      <xs:element name="limit_sum" type="xs:double"/>
+      <xs:element name="limit_datetime" type="xs:dateTime"/>
+      <xs:element name="limit_currency_shortname" type="CurrencyType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+</xs:schema>
